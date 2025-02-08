@@ -1,11 +1,13 @@
 import React, { useRef, useState } from 'react';
 import "./App.css";
+import { core } from '@tauri-apps/api';
 
 function CVGenerator() {
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const phoneRef = useRef(null);
   const [workExp, setWorkExp] = useState([]);
+  const [response, setResponse] = useState("");
 
   const addWorkExp = () => {
     setWorkExp([
@@ -40,7 +42,17 @@ function CVGenerator() {
       }))
     };
     console.log(data);
-    // Call your PDF generation function here if needed.
+    renderPdf(data);
+  };
+
+
+  const renderPdf = async (data) => {
+    try {
+      const result = await core.invoke("run_python_script", { data: data });
+      setResponse(result);
+    } catch (error) {
+      console.error("Error calling Python:", error);
+    }
   };
 
   return (
