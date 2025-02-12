@@ -33,19 +33,19 @@
 ((%- endif -%))
 
 ((%- if projects -%))
-\customheading{Projects}
-((%- for project in projects -%))
-    \runsubsection{((( project.name )))} 
-    \descript{| ((( project.introduction )))} 
-    \location{((( project.dates )))((% if project.dates and project.location %)) | ((% endif %))((( project.location )))}
-    \begin{tightemize}
-        ((%- for desc_item in project.desc_items -%))
-            ((%- if desc_item -%))
-                \item ((( desc_item )))
-            ((%- endif -%))
-        ((%- endfor -%))
-    \end{tightemize}
-    \sectionsep
+    \customheading{Projects}
+    ((%- for project in projects -%))
+        \runsubsection{((( project.name )))} 
+        \descript{| ((( project.introduction )))} 
+        \location{((( project.dates )))((% if project.dates and project.location %)) | ((% endif %))((( project.location )))}
+        \begin{tightemize}
+            ((%- for desc_item in project.desc_items -%))
+                ((%- if desc_item -%))
+                    \item ((( desc_item )))
+                ((%- endif -%))
+            ((%- endfor -%))
+        \end{tightemize}
+        \sectionsep
     ((%- endfor -%))
 ((%- endif -%))
 
@@ -53,14 +53,31 @@
 \hfill
 \begin{minipage}[t]{0.33\textwidth}
 
-\customheading{Education}
-\subsection{((( university_name )))} 
-\descript{((( degree_info )))} 
-\location{((( graduation_date ))) | ((( university_location )))} 
-\sectionsep
+((%- if educations -%))
+    \customheading{Education}
+    ((%- for education in educations -%))
+        \subsection{((( education.school )))} 
+        \descript{((( education.degree )))} 
+        \location{((( education.date_range )))((% if education.date_range and education.location %)) | ((% endif %))((( education.location )))}
+        \begin{tightemize}
+            ((%- for desc_item in education.desc_items -%))
+                ((%- if desc_item -%))
+                    \item ((( desc_item )))
+                ((%- endif -%))
+            ((%- endfor -%))
+        \end{tightemize}
+        \sectionsep
+    ((%- endfor -%))
+((%- endif -%))
 
-\customheading{Skills}
-((( skills_text )))
+
+((%- if skills -%))
+    \customheading{Skills}
+    \begin{tightemize}
+        ((%- for skill in skills -%))
+            \item ((( skill )))
+        ((%- endfor -%))
+((%- endif -%))
 \sectionsep
 
 \end{minipage}
