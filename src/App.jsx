@@ -8,6 +8,7 @@ function CVGenerator() {
   const phoneRef = useRef(null);
   const [workExp, setWorkExp] = useState([]);
   const [project, setProject] = useState([]);
+  const [education, setEducation] = useState([]);
   const [response, setResponse] = useState("");
 
   const addWorkExp = () => {
@@ -39,6 +40,22 @@ function CVGenerator() {
       }
     ]);
   };
+
+  const addEducation = () => {
+    setEducation([
+      ...education,
+      {
+        schoolRef: React.createRef(),
+        degreeRef: React.createRef(),
+        dateRangeRef: React.createRef(),
+        locationRef: React.createRef(),
+        desc1Ref: React.createRef(),
+        desc2Ref: React.createRef(),
+        desc3Ref: React.createRef()
+      }
+    ]);
+  };
+
   const handleSubmit = () => {
     const data = {
       name: nameRef.current.value,
@@ -64,6 +81,18 @@ function CVGenerator() {
           proj.desc1Ref.current.value,
           proj.desc2Ref.current.value,
           proj.desc3Ref.current.value
+        ]
+      })),
+
+      educations: education.map(edu => ({
+        school: edu.schoolRef.current.value,
+        degree: edu.degreeRef.current.value,
+        date_range: edu.dateRangeRef.current.value,
+        location: edu.locationRef.current.value,
+        desc_items: [
+          edu.desc1Ref.current.value,
+          edu.desc2Ref.current.value,
+          edu.desc3Ref.current.value
         ]
       }))
     };
@@ -96,19 +125,19 @@ function CVGenerator() {
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <label style={{ width: "50px" }}>Name:</label>
             <input type="text" ref={nameRef} style={{ padding: "5px", width: "200px" }} 
-                autocomplete="name"/>
+                autoComplete="name"/>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <label style={{ width: "50px" }}>Email:</label>
             <input type="email" ref={emailRef} style={{ padding: "5px", width: "200px" }} 
-                autocomplete="email"/>
+                autoComplete="email"/>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <label style={{ width: "50px" }}>Phone:</label>
             <input type="tel" ref={phoneRef} style={{ padding: "5px", width: "200px" }} 
-                autocomplete="tel"/>
+                autoComplete="tel"/>
         </div>
       </div>
       <div
@@ -216,6 +245,61 @@ function CVGenerator() {
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <label style={{ width: "100px" }}>Description 3:</label>
             <textarea ref={proj.desc3Ref} style={{ flex: "1", height: "75px" }} />
+          </div>
+        </div>
+        ))}
+      </div>
+
+      <div
+        style={{
+          border: '2px groove',
+          padding: '10px',
+          marginBottom: '10px',
+          height: education.length > 0 ? '580px' : '60px',
+          overflowY: 'auto'
+        }}
+      >
+        <button onClick={addEducation}>Add Education</button>
+        {education.map((edu, index) => (
+          <div
+          key={index}
+          style={{
+            border: "1px groove #0f0f0f",
+            padding: "10px",
+            marginBottom: "5px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+          }}
+        >
+          <h3 style={{ margin: "0 0 0 0" }}>Education {index + 1}</h3>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <label style={{ width: "100px" }}>School:</label>
+            <input type="text" ref={edu.schoolRef} style={{width: "200px"}} />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <label style={{ width: "100px" }}>Degree:</label>
+            <input type="text" ref={edu.degreeRef} style={{width: "200px"}} />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <label style={{ width: "100px" }}>Date:</label>
+            <input type="text" ref={edu.dateRangeRef} style={{width: "200px"}} />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <label style={{ width: "100px" }}>Location:</label>
+            <input type="text" ref={edu.locationRef} style={{width: "200px"}} />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <label style={{ width: "100px" }}>Description 1:</label>
+            <textarea ref={edu.desc1Ref} style={{ flex: "1", height: "75px" }} />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <label style={{ width: "100px" }}>Description 2:</label>
+            <textarea ref={edu.desc2Ref} style={{ flex: "1", height: "75px" }} />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <label style={{ width: "100px" }}>Description 3:</label>
+            <textarea ref={edu.desc3Ref} style={{ flex: "1", height: "75px" }} />
           </div>
         </div>
         ))}
