@@ -9,6 +9,7 @@ function CVGenerator() {
   const [workExp, setWorkExp] = useState([]);
   const [project, setProject] = useState([]);
   const [education, setEducation] = useState([]);
+  const [skill, setSkill] = useState([]);
   const [response, setResponse] = useState("");
 
   const addWorkExp = () => {
@@ -56,6 +57,15 @@ function CVGenerator() {
     ]);
   };
 
+  const addSkill = () => {
+    setSkill([
+      ...skill,
+      {
+        skillRef: React.createRef()
+      }
+    ]);
+  };
+
   const handleSubmit = () => {
     const data = {
       name: nameRef.current.value,
@@ -83,7 +93,6 @@ function CVGenerator() {
           proj.desc3Ref.current.value
         ]
       })),
-
       educations: education.map(edu => ({
         school: edu.schoolRef.current.value,
         degree: edu.degreeRef.current.value,
@@ -94,7 +103,8 @@ function CVGenerator() {
           edu.desc2Ref.current.value,
           edu.desc3Ref.current.value
         ]
-      }))
+      })),
+      skills: skill.map(s => s.skillRef.current.value)
     };
     console.log(data);
     renderPdf(data);
@@ -140,16 +150,17 @@ function CVGenerator() {
                 autoComplete="tel"/>
         </div>
       </div>
+      <div><button onClick={addWorkExp}>Add Work Experience</button></div>
       <div
         style={{
           border: '2px groove',
           padding: '10px',
           marginBottom: '10px',
           height: workExp.length > 0 ? '580px' : '60px',
+          display: workExp.length === 0 ? 'none' : 'block',
           overflowY: 'auto'
         }}
       >
-        <button onClick={addWorkExp}>Add Work Experience</button>
         {workExp.map((exp, index) => (
           <div
           key={index}
@@ -194,17 +205,17 @@ function CVGenerator() {
         </div>
         ))}
       </div>
-
+      <div><button onClick={addProject}>Add Project</button></div>
       <div
         style={{
           border: '2px groove',
           padding: '10px',
           marginBottom: '10px',
           height: project.length > 0 ? '580px' : '60px',
+          display: project.length === 0 ? 'none' : 'block',
           overflowY: 'auto'
         }}
       >
-        <button onClick={addProject}>Add Project</button>
         {project.map((proj, index) => (
           <div
           key={index}
@@ -249,17 +260,18 @@ function CVGenerator() {
         </div>
         ))}
       </div>
-
+      <div><button onClick={addEducation}>Add Education</button></div>
       <div
         style={{
+          display: education.length === 0 ? 'none' : 'block',
           border: '2px groove',
           padding: '10px',
           marginBottom: '10px',
-          height: education.length > 0 ? '580px' : '60px',
+          height: education.length > 0 ? '580px' : '0px',
           overflowY: 'auto'
         }}
       >
-        <button onClick={addEducation}>Add Education</button>
+        
         {education.map((edu, index) => (
           <div
           key={index}
@@ -301,6 +313,31 @@ function CVGenerator() {
             <label style={{ width: "100px" }}>Description 3:</label>
             <textarea ref={edu.desc3Ref} style={{ flex: "1", height: "75px" }} />
           </div>
+        </div>
+        ))}
+      </div>
+      <div><button onClick={addSkill}>Add Skill</button> </div>
+      <div
+        style={{
+          border: '2px groove',
+          padding: '10px',
+          marginBottom: '10px',
+          height: skill.length > 0 ? '400px' : '60px',
+          display: skill.length === 0 ? 'none' : 'block',
+          overflowY: 'auto'
+        }}
+      >
+        {skill.map((s, index) => (
+          <div
+          key={index}
+          style={{
+            marginBottom: "5px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+          }}
+        >
+        <input type="text" ref={s.skillRef} style={{width: "100px"}} />
         </div>
         ))}
       </div>
