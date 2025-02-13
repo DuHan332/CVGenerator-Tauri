@@ -1,6 +1,4 @@
-use std::process::{Command, Stdio};
 use std::io::Write;
-use serde_json::{Value};
 
 #[tauri::command]
 fn run_python_script(data: serde_json::Value) -> String {
