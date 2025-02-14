@@ -120,6 +120,25 @@ function CVGenerator() {
     }
   };
 
+  useEffect(() => {
+    if (skill.length > 0) {
+      // Focus the most recently added input
+      skill[skill.length - 1].skillRef.current.focus();
+    }
+  }, [skill]);
+
+  useEffect(() => {
+    if (workExp.length > 0 ){
+      workExp[workExp.length - 1].companyRef.current.focus();
+    }
+  }, [workExp]);
+
+  useEffect(() => {
+    if (project.length > 0 ){
+      project[project.length - 1].nameRef.current.focus();
+    }
+  }, [project]);
+
   return (
     <div style={{ padding: '20px' }}>
       <div
