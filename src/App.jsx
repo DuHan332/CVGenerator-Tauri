@@ -181,7 +181,7 @@ function CVGenerator() {
           border: '2px groove',
           padding: '10px',
           marginBottom: '10px',
-          height: workExp.length > 0 ? '580px' : '60px',
+          height: '525px',
           display: workExp.length === 0 ? 'none' : 'block',
           overflowY: 'auto'
         }}
@@ -236,7 +236,7 @@ function CVGenerator() {
           border: '2px groove',
           padding: '10px',
           marginBottom: '10px',
-          height: project.length > 0 ? '580px' : '60px',
+          height: '525px',
           display: project.length === 0 ? 'none' : 'block',
           overflowY: 'auto'
         }}
@@ -292,7 +292,7 @@ function CVGenerator() {
           border: '2px groove',
           padding: '10px',
           marginBottom: '10px',
-          height: education.length > 0 ? '580px' : '0px',
+          height: '525px',
           overflowY: 'auto'
         }}
       >
@@ -347,7 +347,7 @@ function CVGenerator() {
           border: '2px groove',
           padding: '10px',
           marginBottom: '10px',
-          height: skill.length > 0 ? '400px' : '60px',
+          height: skill.length > 0 ? '200px' : '60px',
           display: skill.length === 0 ? 'none' : 'block',
           overflowY: 'auto'
         }}
@@ -356,8 +356,8 @@ function CVGenerator() {
           <div
           key={index}
           style={{
-            marginBottom: "5px",
-            display: "flex",
+            margin: "10px 5px",
+            display: "inline-flex",
             flexDirection: "column",
             gap: "10px",
           }}
