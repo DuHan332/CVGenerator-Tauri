@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import "./App.css";
 import { core } from '@tauri-apps/api';
 
@@ -337,7 +337,11 @@ function CVGenerator() {
             gap: "10px",
           }}
         >
-        <input type="text" ref={s.skillRef} style={{width: "100px"}} />
+        <input type="text" ref={s.skillRef} style={{width: "100px"}} onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            addSkill();
+          }}}
+        />
         </div>
         ))}
       </div>
