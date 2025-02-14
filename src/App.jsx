@@ -139,6 +139,12 @@ function CVGenerator() {
     }
   }, [project]);
 
+  useEffect(() => {
+    if (education.length > 0 ){
+      education[education.length - 1].schoolRef.current.focus();
+    }
+  }, [education]);
+
   return (
     <div style={{ padding: '20px' }}>
       <div
