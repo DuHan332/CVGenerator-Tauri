@@ -75,7 +75,9 @@
     \customheading{Skills}
     \begin{tightemize}
         ((%- for skill in skills -%))
-            \item ((( skill )))
+            ((%- if skill -%))
+                \item ((( skill )))
+            ((%- endif -%))
         ((%- endfor -%))
     \end{tightemize}
 ((%- endif -%))
