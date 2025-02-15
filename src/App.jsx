@@ -18,7 +18,8 @@ function CVGenerator() {
       {
         companyRef: React.createRef(),
         titleRef: React.createRef(),
-        dateRangeRef: React.createRef(),
+        dateStartRef: React.createRef(),
+        dateEndRef: React.createRef(),
         locationRef: React.createRef(),
         desc1Ref: React.createRef(),
         desc2Ref: React.createRef(),
@@ -48,7 +49,8 @@ function CVGenerator() {
       {
         schoolRef: React.createRef(),
         degreeRef: React.createRef(),
-        dateRangeRef: React.createRef(),
+        dateStartRef: React.createRef(),
+        dateEndRef: React.createRef(),
         locationRef: React.createRef(),
         desc1Ref: React.createRef(),
         desc2Ref: React.createRef(),
@@ -67,6 +69,19 @@ function CVGenerator() {
   };
 
   const handleSubmit = () => {
+    const formatMonth = (value) => {
+      if (!value) return "";
+      const [year, month] = value.split("-");
+      if (year && month && !isNaN(year) && !isNaN(month)) {
+        const dateObj = new Date(year, month - 1);
+        return dateObj.toLocaleString("en-US", {
+          month: "short",
+          year: "numeric",
+        });
+      } else {
+        return value;
+      }
+    };
     const data = {
       name: nameRef.current.value,
       email: emailRef.current.value,
@@ -74,7 +89,7 @@ function CVGenerator() {
       jobs: workExp.map(exp => ({
         company: exp.companyRef.current.value,
         title: exp.titleRef.current.value,
-        date_range: exp.dateRangeRef.current.value,
+        date_range: formatMonth(exp.dateStartRef.current.value) + " - " + formatMonth(exp.dateEndRef.current.value),
         location: exp.locationRef.current.value,
         desc_items: [
           exp.desc1Ref.current.value,
@@ -85,7 +100,7 @@ function CVGenerator() {
       projects: project.map(proj => ({
         name: proj.nameRef.current.value,
         introduction: proj.introRef.current.value,
-        dates: proj.dateRef.current.value,
+        dates: formatMonth(proj.dateRef.current.value),
         location: proj.locationRef.current.value,
         desc_items: [
           proj.desc1Ref.current.value,
@@ -96,7 +111,7 @@ function CVGenerator() {
       educations: education.map(edu => ({
         school: edu.schoolRef.current.value,
         degree: edu.degreeRef.current.value,
-        date_range: edu.dateRangeRef.current.value,
+        date_range: formatMonth(edu.dateStartRef.current.value) + " - " + formatMonth(edu.dateEndRef.current.value),
         location: edu.locationRef.current.value,
         desc_items: [
           edu.desc1Ref.current.value,
@@ -208,8 +223,12 @@ function CVGenerator() {
             <input type="text" ref={exp.titleRef} style={{width: "200px"}} />
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <label style={{ width: "100px" }}>Date Range:</label>
-            <input type="text" ref={exp.dateRangeRef} style={{width: "200px"}} />
+            <label style={{ width: "100px" }}>From:</label>
+            <input type="month" ref={exp.dateStartRef} style={{width: "200px"}} />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <label style={{ width: "100px" }}>To:</label>
+            <input type="month" ref={exp.dateEndRef} style={{width: "200px"}} />
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <label style={{ width: "100px" }}>Location:</label>
@@ -264,7 +283,7 @@ function CVGenerator() {
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <label style={{ width: "100px" }}>Date:</label>
-            <input type="text" ref={proj.dateRef} style={{width: "200px"}} />
+            <input type="month" ref={proj.dateRef} style={{width: "200px"}} />
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <label style={{ width: "100px" }}>Location:</label>
@@ -319,8 +338,12 @@ function CVGenerator() {
             <input type="text" ref={edu.degreeRef} style={{width: "200px"}} />
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <label style={{ width: "100px" }}>Date:</label>
-            <input type="text" ref={edu.dateRangeRef} style={{width: "200px"}} />
+            <label style={{ width: "100px" }}>From:</label>
+            <input type="month" ref={edu.dateStartRef} style={{width: "200px"}} />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <label style={{ width: "100px" }}>To:</label>
+            <input type="month" ref={edu.dateEndRef} style={{width: "200px"}} />
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <label style={{ width: "100px" }}>Location:</label>
