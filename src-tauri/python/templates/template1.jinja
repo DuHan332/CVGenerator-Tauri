@@ -19,7 +19,7 @@
     \customheading{Experience}
     ((%- for job in jobs -%))
     \runsubsection{((( job.company )))}
-    \descript{| ((( job.title )))} 
+    \descript{((% if job.company and job.title %))| ((% endif %))((( job.title )))}
     \location{((( job.date_range )))((% if job.date_range and job.location %)) | ((% endif %))((( job.location )))}
     \begin{tightemize}
         ((%- for desc_item in job.desc_items -%))
@@ -36,7 +36,7 @@
     \customheading{Projects}
     ((%- for project in projects -%))
         \runsubsection{((( project.name )))} 
-        \descript{| ((( project.introduction )))} 
+        \descript{((% if project.name and project.introduction %))| ((% endif %))((( project.introduction )))} 
         \location{((( project.dates )))((% if project.dates and project.location %)) | ((% endif %))((( project.location )))}
         \begin{tightemize}
             ((%- for desc_item in project.desc_items -%))
