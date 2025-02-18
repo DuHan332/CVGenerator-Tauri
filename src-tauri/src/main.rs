@@ -1,4 +1,5 @@
 use std::io::Write;
+mod render_pdf;
 
 #[tauri::command]
 fn run_python_script(data: serde_json::Value) -> String {
@@ -26,9 +27,16 @@ fn run_python_script(data: serde_json::Value) -> String {
     output_str.to_string()
 }
 
+#[tauri::command]
+fn run_rust_pdf_generator(json_data: String) -> String {
+    let response = render_pdf::process_pdf_request(&json_data);
+    println!("📜 PDF Generator Response: {}", response);
+    response
+}
+
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![run_python_script])
+        .invoke_handler(tauri::generate_handler![run_rust_pdf_generator])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
