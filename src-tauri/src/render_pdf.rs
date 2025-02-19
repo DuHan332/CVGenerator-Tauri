@@ -126,7 +126,7 @@ fn create_new_file_name(original_pdf: &str) -> String {
 pub fn process_pdf_request(json_data: &str) -> String {
     let data: Value = serde_json::from_str(json_data).expect("Failed to parse JSON");
 
-    let name = data["name"].as_str().unwrap_or("new_cv");
+    let name = data["name"].as_str().unwrap_or("new");
     let filename = format!("{}_cv.pdf", name);
 
     let pdf_file = generate_pdf(data, "template1.jinja", &filename, false);
