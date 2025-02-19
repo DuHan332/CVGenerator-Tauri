@@ -128,10 +128,11 @@ function CVGenerator() {
 
   const renderPdf = async (data) => {
     try {
-      const result = await core.invoke("run_python_script", { data: data });
+      // const result = await core.invoke("run_python_script", { data: data });
+      const result = await core.invoke("run_rust_pdf_generator", { jsonData: JSON.stringify(data) });
       setResponse(result);
     } catch (error) {
-      console.error("Error calling Python:", error);
+      console.error("Error:", error);
     }
   };
 
