@@ -1,5 +1,8 @@
 use std::io::Write;
 mod render_pdf;
+use std::fs::File;
+use std::path::PathBuf;
+use serde_json::Value;
 
 #[tauri::command]
 fn run_python_script(data: serde_json::Value) -> String {
@@ -34,9 +37,32 @@ fn run_rust_pdf_generator(json_data: String) -> String {
     response
 }
 
+#[tauri::command]
+fn save_json(json_data: String) -> Result<(), String> {
+    let output_dir = std::env::current_dir()
+        .expect("Failed to get current directory")
+        .parent()
+        .expect("Failed to get parent directory")
+        .join("output");
+
+    if !output_dir.exists() {
+        std::fs::create_dir_all(&output_dir).map_err(|e| format!("Failed to create output directory: {}", e))?;
+    }
+    let data: Value = serde_json::from_str(&json_data).expect("Failed to parse JSON");
+    let name = data["name"].as_str().unwrap_or("new");
+    let filename = format!("{}_cv_data.json", name);
+    let json_file_path = output_dir.join(filename);
+
+    let mut file = File::create(&json_file_path).map_err(|e| format!("Failed to create JSON file: {}", e))?;
+    file.write_all(json_data.as_bytes()).map_err(|e| format!("Failed to write JSON data: {}", e))?;
+
+    println!("✅ JSON saved at {:?}", json_file_path);
+    Ok(())
+}
+
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![run_rust_pdf_generator])
+        .invoke_handler(tauri::generate_handler![run_rust_pdf_generator, save_json])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
