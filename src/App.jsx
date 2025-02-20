@@ -10,7 +10,6 @@ function CVGenerator() {
   const [project, setProject] = useState([]);
   const [education, setEducation] = useState([]);
   const [skill, setSkill] = useState([]);
-  const [response, setResponse] = useState("");
 
   const addWorkExp = () => {
     setWorkExp([
@@ -125,12 +124,73 @@ function CVGenerator() {
     renderPdf(data);
   };
 
+  const handleExport = async () => {
+    const formatMonth = (value) => {
+      if (!value) return "";
+      const [year, month] = value.split("-");
+      if (year && month && !isNaN(year) && !isNaN(month)) {
+        const dateObj = new Date(year, month - 1);
+        return dateObj.toLocaleString("en-US", {
+          month: "short",
+          year: "numeric",
+        });
+      } else {
+        return value;
+      }
+    };
+    const data = {
+      name: nameRef.current.value,
+      email: emailRef.current.value,
+      phone: phoneRef.current.value,
+      jobs: workExp.map(exp => ({
+        company: exp.companyRef.current.value,
+        title: exp.titleRef.current.value,
+        date_range: formatMonth(exp.dateStartRef.current.value) + " - " + formatMonth(exp.dateEndRef.current.value),
+        location: exp.locationRef.current.value,
+        desc_items: [
+          exp.desc1Ref.current.value,
+          exp.desc2Ref.current.value,
+          exp.desc3Ref.current.value
+        ]
+      })),
+      projects: project.map(proj => ({
+        name: proj.nameRef.current.value,
+        introduction: proj.introRef.current.value,
+        dates: formatMonth(proj.dateRef.current.value),
+        location: proj.locationRef.current.value,
+        desc_items: [
+          proj.desc1Ref.current.value,
+          proj.desc2Ref.current.value,
+          proj.desc3Ref.current.value
+        ]
+      })),
+      educations: education.map(edu => ({
+        school: edu.schoolRef.current.value,
+        degree: edu.degreeRef.current.value,
+        date_range: formatMonth(edu.dateStartRef.current.value) + " - " + formatMonth(edu.dateEndRef.current.value),
+        location: edu.locationRef.current.value,
+        desc_items: [
+          edu.desc1Ref.current.value,
+          edu.desc2Ref.current.value,
+          edu.desc3Ref.current.value
+        ]
+      })),
+      skills: skill.map(s => s.skillRef.current.value)
+    };
+    try {
+      await core.invoke("save_json", { jsonData: JSON.stringify(data) });
+      alert("✅ JSON saved successfully!");
+    } catch (error) {
+      console.error("❌ Error saving JSON:", error);
+      alert("❌ Failed to save JSON.");
+    }
+  };
 
   const renderPdf = async (data) => {
     try {
       // const result = await core.invoke("run_python_script", { data: data });
-      const result = await core.invoke("run_rust_pdf_generator", { jsonData: JSON.stringify(data) });
-      setResponse(result);
+      await core.invoke("run_rust_pdf_generator", { jsonData: JSON.stringify(data) });
+      alert("✅ PDF generated successfully!");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -395,7 +455,8 @@ function CVGenerator() {
         ))}
       </div>
 
-      <button onClick={handleSubmit}>Submit</button>
+      <div><button onClick={handleSubmit}>Submit</button></div>
+      <div><button onClick={handleExport}>Export</button> </div>
     </div>
   );
 }
