@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import "./App.css";
 import { core } from '@tauri-apps/api';
+import { open } from '@tauri-apps/plugin-dialog';
 
 function CVGenerator() {
   const nameRef = useRef(null);
@@ -184,6 +185,129 @@ function CVGenerator() {
       console.error("❌ Error saving JSON:", error);
       alert("❌ Failed to save JSON.");
     }
+  };
+
+  const handleImport = async () => {
+    try {
+      const filePath = await open({
+        multiple: false,
+        directory: false,
+      });
+      if (!filePath) return;
+  
+      const jsonData = await core.invoke("import_json", { filePath });
+      const parsedData = JSON.parse(jsonData);
+      console.log(parsedData);
+      nameRef.current.value = parsedData.name || "";
+      emailRef.current.value = parsedData.email || "";
+      phoneRef.current.value = parsedData.phone || "";
+  
+      setWorkExp(
+        parsedData.jobs.map(job => ({
+          companyRef: React.createRef(),
+          titleRef: React.createRef(),
+          dateStartRef: React.createRef(),
+          dateEndRef: React.createRef(),
+          locationRef: React.createRef(),
+          desc1Ref: React.createRef(),
+          desc2Ref: React.createRef(),
+          desc3Ref: React.createRef(),
+        }))
+      );
+  
+      setProject(
+        parsedData.projects.map(proj => ({
+          nameRef: React.createRef(),
+          introRef: React.createRef(),
+          dateRef: React.createRef(),
+          locationRef: React.createRef(),
+          desc1Ref: React.createRef(),
+          desc2Ref: React.createRef(),
+          desc3Ref: React.createRef(),
+        }))
+      );
+  
+      setEducation(
+        parsedData.educations.map(edu => ({
+          schoolRef: React.createRef(),
+          degreeRef: React.createRef(),
+          dateStartRef: React.createRef(),
+          dateEndRef: React.createRef(),
+          locationRef: React.createRef(),
+          desc1Ref: React.createRef(),
+          desc2Ref: React.createRef(),
+          desc3Ref: React.createRef(),
+        }))
+      );
+  
+      setSkill(
+        parsedData.skills.map(skill => ({
+          skillRef: React.createRef(),
+        }))
+      );
+      //Set values after the state update
+      setTimeout(() => {
+        newWorkExp.forEach((exp, index) => {
+          exp.companyRef.current.value = parsedData.jobs[index].company || "";
+          exp.titleRef.current.value = parsedData.jobs[index].title || "";
+          exp.locationRef.current.value = parsedData.jobs[index].location || "";
+          exp.desc1Ref.current.value = parsedData.jobs[index].desc_items[0] || "";
+          exp.desc2Ref.current.value = parsedData.jobs[index].desc_items[1] || "";
+          exp.desc3Ref.current.value = parsedData.jobs[index].desc_items[2] || "";
+  
+          // Extract and format start & end dates
+          const dateRange = parsedData.jobs[index].date_range || "";
+          const [startDate, endDate] = dateRange.split(" - ");
+          exp.dateStartRef.current.value = startDate ? formatDateToInput(startDate) : "";
+          exp.dateEndRef.current.value = endDate ? formatDateToInput(endDate) : "";
+        });
+  
+        newProjects.forEach((proj, index) => {
+          proj.nameRef.current.value = parsedData.projects[index].name || "";
+          proj.introRef.current.value = parsedData.projects[index].introduction || "";
+          proj.locationRef.current.value = parsedData.projects[index].location || "";
+          proj.desc1Ref.current.value = parsedData.projects[index].desc_items[0] || "";
+          proj.desc2Ref.current.value = parsedData.projects[index].desc_items[1] || "";
+          proj.desc3Ref.current.value = parsedData.projects[index].desc_items[2] || "";
+  
+          // Extract and format project date
+          const projectDate = parsedData.projects[index].dates || "";
+          proj.dateRef.current.value = projectDate ? formatDateToInput(projectDate) : "";
+        });
+  
+        newEducation.forEach((edu, index) => {
+          edu.schoolRef.current.value = parsedData.educations[index].school || "";
+          edu.degreeRef.current.value = parsedData.educations[index].degree || "";
+          edu.locationRef.current.value = parsedData.educations[index].location || "";
+          edu.desc1Ref.current.value = parsedData.educations[index].desc_items[0] || "";
+          edu.desc2Ref.current.value = parsedData.educations[index].desc_items[1] || "";
+          edu.desc3Ref.current.value = parsedData.educations[index].desc_items[2] || "";
+  
+          // Extract and format start & end dates
+          const dateRange = parsedData.educations[index].date_range || "";
+          const [startDate, endDate] = dateRange.split(" - ");
+          edu.dateStartRef.current.value = startDate ? formatDateToInput(startDate) : "";
+          edu.dateEndRef.current.value = endDate ? formatDateToInput(endDate) : "";
+        });
+  
+        newSkills.forEach((s, index) => {
+          s.skillRef.current.value = parsedData.skills[index] || "";
+        });
+  
+      }, 0);
+      console.log("✅ JSON loaded successfully!");
+    } catch (error) {
+      console.error("❌ Failed to load JSON:", error);
+      alert("❌ Error loading JSON.");
+    }
+  };
+  
+  const formatDateToInput = (dateStr) => {
+    if (!dateStr) return "";
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    return `${year}-${month}`;
   };
 
   const renderPdf = async (data) => {
@@ -457,6 +581,7 @@ function CVGenerator() {
 
       <div><button onClick={handleSubmit}>Submit</button></div>
       <div><button onClick={handleExport}>Export</button> </div>
+      <div><button onClick={handleImport}>Import</button> </div>
     </div>
   );
 }
