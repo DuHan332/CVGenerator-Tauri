@@ -39,28 +39,28 @@
 \begin{document}
 
 \begin{center}
-    \textbf{\Huge \scshape ((( name ))) } \\
-    \small ((( phone ))) $|$ \href{mailto:((( email )))}{\underline{((( email )))} } $|$ 
-    \href{((( linkedin )))}{\underline{((( linkedin ))) }} $|$
-    \href{((( github )))}{\underline{((( github ))) }}
+    \textbf{\Huge \scshape {{ name }} } \\
+    \small {{ phone }} $|$ \href{mailto:{{ email }}}{\underline{ {{ email }} } } $|$ 
+    \href{ {{linkedin }} }{\underline{ {{ linkedin }} } } $|$
+    \href{ {{ github }} }{\underline{ {{ github }} } }
 \end{center}
 
 \section{Education}
   \begin{itemize}[leftmargin=0.15in, label={}]
     ((%- for edu in educations -%))
-    \item \textbf{((( edu.school )))} \hfill ((( edu.date_range ))) \\
-    \textit{((( edu.degree )))}, ((( edu.location )))
+    \item \textbf{ {{ edu.school }}} \hfill {{ edu.date_range }} \\
+    \textit{ {{ edu.degree }}}, {{ edu.location }}
     ((%- endfor -%))
   \end{itemize}
 
 \section{Experience}
   \begin{itemize}[leftmargin=0.15in, label={}]
     ((%- for job in jobs -%))
-    \item \textbf{((( job.company )))} \hfill ((( job.date_range ))) \\
-    \textit{((( job.title )))}, ((( job.location )))
+    \item \textbf{ {{ job.company }}} \hfill {{ job.date_range }} \\
+    \textit{ {{ job.title }} }, {{ job.location }}
     \begin{itemize}
       ((%- for desc in job.desc_items -%))
-      \item ((( desc )))
+      \item {{ desc }}
       ((%- endfor -%))
     \end{itemize}
     ((%- endfor -%))
@@ -69,11 +69,11 @@
 \section{Projects}
   \begin{itemize}[leftmargin=0.15in, label={}]
     ((%- for project in projects -%))
-    \item \textbf{((( project.name )))} \hfill ((( project.dates ))) \\
-    \textit{((( project.introduction )))}, ((( project.location )))
+    \item \textbf{ {{ project.name }} } \hfill {{ project.dates }} \\
+    \textit{ {{ project.introduction }} }, {{ project.location }}
     \begin{itemize}
       ((%- for desc in project.desc_items -%))
-      \item ((( desc )))
+      \item {{ desc }}
       ((%- endfor -%))
     \end{itemize}
     ((%- endfor -%))
@@ -82,7 +82,7 @@
 \section{Technical Skills}
   \begin{itemize}[leftmargin=0.15in, label={}]
     ((%- for skill in skills -%))
-    \item ((( skill )))
+    \item {{ skill }}
     ((%- endfor -%))
   \end{itemize}
 
