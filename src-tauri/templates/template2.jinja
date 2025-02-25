@@ -1,0 +1,89 @@
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+\pdfgentounicode=1
+
+\begin{document}
+
+\begin{center}
+    \textbf{\Huge \scshape ((( name ))) } \\
+    \small ((( phone ))) $|$ \href{mailto:((( email )))}{\underline{((( email )))} } $|$ 
+    \href{((( linkedin )))}{\underline{((( linkedin ))) }} $|$
+    \href{((( github )))}{\underline{((( github ))) }}
+\end{center}
+
+\section{Education}
+  \begin{itemize}[leftmargin=0.15in, label={}]
+    ((%- for edu in educations -%))
+    \item \textbf{((( edu.school )))} \hfill ((( edu.date_range ))) \\
+    \textit{((( edu.degree )))}, ((( edu.location )))
+    ((%- endfor -%))
+  \end{itemize}
+
+\section{Experience}
+  \begin{itemize}[leftmargin=0.15in, label={}]
+    ((%- for job in jobs -%))
+    \item \textbf{((( job.company )))} \hfill ((( job.date_range ))) \\
+    \textit{((( job.title )))}, ((( job.location )))
+    \begin{itemize}
+      ((%- for desc in job.desc_items -%))
+      \item ((( desc )))
+      ((%- endfor -%))
+    \end{itemize}
+    ((%- endfor -%))
+  \end{itemize}
+
+\section{Projects}
+  \begin{itemize}[leftmargin=0.15in, label={}]
+    ((%- for project in projects -%))
+    \item \textbf{((( project.name )))} \hfill ((( project.dates ))) \\
+    \textit{((( project.introduction )))}, ((( project.location )))
+    \begin{itemize}
+      ((%- for desc in project.desc_items -%))
+      \item ((( desc )))
+      ((%- endfor -%))
+    \end{itemize}
+    ((%- endfor -%))
+  \end{itemize}
+
+\section{Technical Skills}
+  \begin{itemize}[leftmargin=0.15in, label={}]
+    ((%- for skill in skills -%))
+    \item ((( skill )))
+    ((%- endfor -%))
+  \end{itemize}
+
+\end{document}
