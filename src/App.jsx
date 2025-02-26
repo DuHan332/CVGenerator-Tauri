@@ -7,6 +7,7 @@ function CVGenerator() {
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const phoneRef = useRef(null);
+  const templateRef = useRef(null);
   const [workExp, setWorkExp] = useState([]);
   const [project, setProject] = useState([]);
   const [education, setEducation] = useState([]);
@@ -86,6 +87,7 @@ function CVGenerator() {
       name: nameRef.current.value,
       email: emailRef.current.value,
       phone: phoneRef.current.value,
+      template: templateRef.current.value,
       jobs: workExp.map(exp => ({
         company: exp.companyRef.current.value,
         title: exp.titleRef.current.value,
@@ -579,9 +581,19 @@ function CVGenerator() {
         ))}
       </div>
 
-      <div><button onClick={handleSubmit}>Submit</button></div>
-      <div><button onClick={handleExport}>Export</button> </div>
-      <div><button onClick={handleImport}>Import</button> </div>
+      <div>
+        <button onClick={handleSubmit}>Submit</button>
+        <label>Template: </label>
+        <select name="pets" ref={templateRef}>
+          <option value="Template1">template 1</option>
+          <option value="Template2">template 2</option>
+        </select>
+      </div>
+      <div>
+        <button onClick={handleExport}>Export</button>
+        <button onClick={handleImport}>Import</button>
+      </div>
+
     </div>
   );
 }
