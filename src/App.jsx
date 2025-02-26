@@ -589,9 +589,19 @@ function CVGenerator() {
           <option value="Template2">template 2</option>
         </select>
       </div>
-      <div>
-        <button onClick={handleExport}>Export</button>
-        <button onClick={handleImport}>Import</button>
+      <div style={{ display: "flex", gap: "5px" }}>
+        <button 
+          onClick={handleExport} 
+          style={{ padding: "5px 10px", fontSize: "12px" }}
+        >
+          Export
+        </button>
+        <button 
+          onClick={handleImport} 
+          style={{ padding: "5px 10px", fontSize: "12px" }}
+        >
+          Import
+        </button>
       </div>
 
     </div>
