@@ -40,50 +40,58 @@
 
 \begin{center}
     \textbf{\Huge \scshape {{ name }} } \\
-    \small {{ phone }} $|$ \href{mailto:{{ email }}}{\underline{ {{ email }} } } $|$ 
+    \small {{ phone }} $|$ \href{mailto:{{ email }}}{\underline{ {{ email }} } } {# $|$ 
     \href{ {{linkedin }} }{\underline{ {{ linkedin }} } } $|$
-    \href{ {{ github }} }{\underline{ {{ github }} } }
+    \href{ {{ github }} }{\underline{ {{ github }} } } #}
 \end{center}
 
+{% if educations %}
 \section{Education}
   \begin{itemize}[leftmargin=0.15in, label={}]
-    ((%- for edu in educations -%))
+    {%- for edu in educations -%}
     \item \textbf{ {{ edu.school }}} \hfill {{ edu.date_range }} \\
     \textit{ {{ edu.degree }}}, {{ edu.location }}
-    ((%- endfor -%))
+    {%- endfor -%}
   \end{itemize}
+{% endif %}
 
+{% if jobs | length > 0 %}
 \section{Experience}
   \begin{itemize}[leftmargin=0.15in, label={}]
-    ((%- for job in jobs -%))
+    {%- for job in jobs -%}
     \item \textbf{ {{ job.company }}} \hfill {{ job.date_range }} \\
     \textit{ {{ job.title }} }, {{ job.location }}
     \begin{itemize}
-      ((%- for desc in job.desc_items -%))
+      {%- for desc in job.desc_items -%}
       \item {{ desc }}
-      ((%- endfor -%))
+      {%- endfor -%}
     \end{itemize}
-    ((%- endfor -%))
+    {%- endfor -%}
   \end{itemize}
+{% endif %}
 
+{% if projects | length > 0 %}
 \section{Projects}
   \begin{itemize}[leftmargin=0.15in, label={}]
-    ((%- for project in projects -%))
+    {%- for project in projects -%}
     \item \textbf{ {{ project.name }} } \hfill {{ project.dates }} \\
     \textit{ {{ project.introduction }} }, {{ project.location }}
     \begin{itemize}
-      ((%- for desc in project.desc_items -%))
+      {%- for desc in project.desc_items -%}
       \item {{ desc }}
-      ((%- endfor -%))
+      {%- endfor -%}
     \end{itemize}
-    ((%- endfor -%))
+    {%- endfor -%}
   \end{itemize}
+{% endif %}
 
+{% if skills | length > 0 %}
 \section{Technical Skills}
   \begin{itemize}[leftmargin=0.15in, label={}]
-    ((%- for skill in skills -%))
+    {%- for skill in skills -%}
     \item {{ skill }}
-    ((%- endfor -%))
+    {%- endfor -%}
   \end{itemize}
+{% endif %}
 
 \end{document}
