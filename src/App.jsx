@@ -585,8 +585,8 @@ function CVGenerator() {
         <button onClick={handleSubmit}>Submit</button>
         <label>Template: </label>
         <select name="pets" ref={templateRef}>
-          <option value="Template1">template 1</option>
-          <option value="Template2">template 2</option>
+          <option value="template1">template 1</option>
+          <option value="template2">template 2</option>
         </select>
       </div>
       <div style={{ display: "flex", gap: "5px" }}>
