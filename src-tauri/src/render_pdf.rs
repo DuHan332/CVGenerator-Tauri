@@ -144,8 +144,10 @@ pub fn process_pdf_request(json_data: &str) -> String {
 
     let name = data["name"].as_str().unwrap_or("new");
     let filename = format!("{}_cv.pdf", name);
-
-    let pdf_file = generate_pdf(data, "template1.jinja", &filename, false);
+    let template = data["template"].as_str().unwrap_or("template1");
+    let template_name = format!("{}.jinja", template);
+    println!("{}", data);
+    let pdf_file = generate_pdf(data, &template_name, &filename, false);
 
     let response = json!({
         "status": "success",
