@@ -589,6 +589,7 @@ function CVGenerator() {
           <option value="template2">template 2</option>
         </select>
       </div>
+      <hr></hr>
       <div style={{ display: "flex", gap: "5px" }}>
         <button 
           onClick={handleExport} 
