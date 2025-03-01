@@ -592,13 +592,13 @@ function CVGenerator() {
       <div style={{ display: "flex", gap: "5px" }}>
         <button 
           onClick={handleExport} 
-          style={{ padding: "5px 10px", fontSize: "12px", borderRadius: "3px"}}
+          style={{ padding: "5px 10px", fontSize: "12px", borderRadius: "3px", margin: "4px"}}
         >
           Export
         </button>
         <button 
           onClick={handleImport} 
-          style={{ padding: "5px 10px", fontSize: "12px", borderRadius: "3px" }}
+          style={{ padding: "5px 10px", fontSize: "12px", borderRadius: "3px", margin: "4px" }}
         >
           Import
         </button>
