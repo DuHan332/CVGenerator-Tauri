@@ -5,7 +5,7 @@
 
 \begin{document}
 
-\namesection{ {{name}} }{ 
+\namesection{ {{ name if name else 'new' }} }{ 
     \href{mailto:{{ email }}}{ {{ email }} }
     {% if email and phone %}
      | 
