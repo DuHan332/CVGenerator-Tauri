@@ -16,8 +16,6 @@ pub fn generate_pdf(
 ) -> String {
     let output_dir = std::env::current_dir()
         .expect("Failed to get current directory")
-        .parent()
-        .expect("Failed to get parent directory")
         .join("output");
 
     if !output_dir.exists() {
