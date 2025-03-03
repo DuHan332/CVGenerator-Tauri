@@ -71,7 +71,7 @@ function CVGenerator() {
   };
 
   const handleSubmit = async () => {
-    let fileName = "new_cv.pdf";
+    let fileName = "";
     if (nameRef.current.value !== "") {
       fileName = nameRef.current.value + "_cv.pdf";
     }
