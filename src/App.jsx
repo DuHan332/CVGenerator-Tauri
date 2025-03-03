@@ -71,14 +71,22 @@ function CVGenerator() {
   };
 
   const handleSubmit = async () => {
+    let fileName = "new_cv.pdf";
+    if (nameRef.current.value !== "") {
+      fileName = nameRef.current.value + "_cv.pdf";
+    }
+    else {
+      alert("Please enter your name before submitting.");
+      return;
+    }
 
     const filePath = await save({
       filters: [{ name: "PDF Files", extensions: ["pdf"] }],
-      defaultPath: "cv_output.pdf", // Default file name
+      defaultPath: fileName,
     });
 
     if (!filePath) {
-      console.log("❌ User canceled file selection.");
+      console.log("User canceled file selection.");
       return;
     }
 
