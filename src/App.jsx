@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import "./App.css";
 import { core } from '@tauri-apps/api';
 import { open } from '@tauri-apps/plugin-dialog';
+import { save } from '@tauri-apps/plugin-dialog';
 
 function CVGenerator() {
   const nameRef = useRef(null);
@@ -69,7 +70,18 @@ function CVGenerator() {
     ]);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+
+    const filePath = await save({
+      filters: [{ name: "PDF Files", extensions: ["pdf"] }],
+      defaultPath: "cv_output.pdf", // Default file name
+    });
+
+    if (!filePath) {
+      console.log("❌ User canceled file selection.");
+      return;
+    }
+
     const formatMonth = (value) => {
       if (!value) return "";
       const [year, month] = value.split("-");
@@ -602,7 +614,7 @@ function CVGenerator() {
           style={{ padding: "5px 10px", fontSize: "12px", borderRadius: "3px", margin: "4px" }}
         >
           Import
-        </button>
+        </button> 
       </div>
 
     </div>
