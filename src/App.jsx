@@ -148,6 +148,26 @@ function CVGenerator() {
   };
 
   const handleExport = async () => {
+
+    let fileName = "";
+    if (nameRef.current.value !== "") {
+      fileName = nameRef.current.value + "_cv.pdf";
+    }
+    else {
+      alert("Please enter your name before submitting.");
+      return;
+    }
+
+    const filePath = await save({
+      filters: [{ name: "PDF Files", extensions: ["pdf"] }],
+      defaultPath: fileName,
+    });
+
+    if (!filePath) {
+      console.log("User canceled file selection.");
+      return;
+    }
+
     const formatMonth = (value) => {
       if (!value) return "";
       const [year, month] = value.split("-");
