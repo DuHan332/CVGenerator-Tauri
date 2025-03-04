@@ -11,16 +11,9 @@ use tera::{Context, Tera};
 pub fn generate_pdf(
     data: Value,
     template_file: &str,
-    output_pdf_name: &str,
+    output_path: &str,
     replace: bool,
 ) -> String {
-    let output_dir = std::env::current_dir()
-        .expect("Failed to get current directory")
-        .join("output");
-
-    if !output_dir.exists() {
-        fs::create_dir_all(&output_dir).expect("Failed to create output directory");
-    }
 
     let base_dir = env::current_dir().expect("Failed to get current directory");
     println!("📁 Current directory: {:?}", base_dir);
@@ -88,15 +81,9 @@ pub fn generate_pdf(
 
     // Rename the generated PDF
     let temp_pdf_path = template_dir.join("temp_output.pdf");
-    let destination_pdf_path = output_dir.join(output_pdf_name);
+    let destination_pdf_path = output_path;
     if temp_pdf_path.exists() {
-        if replace {
-            fs::rename(&temp_pdf_path, &destination_pdf_path).expect("Failed to move PDF file");
-        } else {
-            let new_destination_pdf_path = output_dir.join(create_new_file_name(output_pdf_name));
-            fs::rename(&temp_pdf_path, &new_destination_pdf_path)
-                .expect("Failed to rename PDF file");
-        }
+        fs::rename(&temp_pdf_path, &destination_pdf_path).expect("Failed to rename PDF file");
     }
 
     for ext in [".aux", ".log", ".out", ".tex"] {
@@ -112,7 +99,7 @@ pub fn generate_pdf(
         }
     }
 
-    destination_pdf_path.to_str().unwrap().to_string()
+    return destination_pdf_path.to_string();
 }
 
 /// Generate a new filename if a file already exists
@@ -137,15 +124,13 @@ fn create_new_file_name(original_pdf: &str) -> String {
 }
 
 /// Entry point to process JSON input
-pub fn process_pdf_request(json_data: &str) -> String {
+pub fn process_pdf_request(json_data: &str, output_path: &str) -> String {
     let data: Value = serde_json::from_str(json_data).expect("Failed to parse JSON");
-
-    let name = data["name"].as_str().unwrap_or("new");
-    let filename = format!("{}_cv.pdf", name);
+    println!("📥 Received Path: {}", output_path);
     let template = data["template"].as_str().unwrap_or("template1");
     let template_name = format!("{}.jinja", template);
     println!("{}", data);
-    let pdf_file = generate_pdf(data, &template_name, &filename, false);
+    let pdf_file = generate_pdf(data, &template_name, &output_path, false);
 
     let response = json!({
         "status": "success",
