@@ -34,8 +34,8 @@ fn run_python_script(data: serde_json::Value) -> String {
 }
 
 #[tauri::command]
-fn run_rust_pdf_generator(json_data: String) -> String {
-    let response = render_pdf::process_pdf_request(&json_data);
+fn run_rust_pdf_generator(json_data: String, output_path: String) -> String {
+    let response = render_pdf::process_pdf_request(&json_data, &output_path);
     println!("📜 PDF Generator Response: {}", response);
     response
 }
