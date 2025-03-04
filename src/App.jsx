@@ -144,7 +144,13 @@ function CVGenerator() {
       skills: skill.map(s => s.skillRef.current.value)
     };
     console.log(data);
-    renderPdf(data);
+    try {
+      // const result = await core.invoke("run_python_script", { data: data });
+      await core.invoke("run_rust_pdf_generator", { jsonData: JSON.stringify(data), outputPath: filePath });
+      alert("✅ PDF generated successfully!");
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const handleExport = async () => {
@@ -350,16 +356,6 @@ function CVGenerator() {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
     return `${year}-${month}`;
-  };
-
-  const renderPdf = async (data) => {
-    try {
-      // const result = await core.invoke("run_python_script", { data: data });
-      await core.invoke("run_rust_pdf_generator", { jsonData: JSON.stringify(data) });
-      alert("✅ PDF generated successfully!");
-    } catch (error) {
-      console.error("Error:", error);
-    }
   };
 
   useEffect(() => {
