@@ -227,7 +227,7 @@ function CVGenerator() {
       skills: skill.map(s => s.skillRef.current.value)
     };
     try {
-      await core.invoke("save_json", { jsonData: JSON.stringify(data) });
+      await core.invoke("save_json", { jsonData: JSON.stringify(data), outputPath: filePath  });
       alert("✅ JSON saved successfully!");
     } catch (error) {
       console.error("❌ Error saving JSON:", error);
