@@ -41,21 +41,9 @@ fn run_rust_pdf_generator(json_data: String, output_path: String) -> String {
 }
 
 #[tauri::command]
-fn save_json(json_data: String) -> Result<(), String> {
-    let output_dir = std::env::current_dir()
-        .expect("Failed to get current directory")
-        .parent()
-        .expect("Failed to get parent directory")
-        .join("output");
-
-    if !output_dir.exists() {
-        std::fs::create_dir_all(&output_dir)
-            .map_err(|e| format!("Failed to create output directory: {}", e))?;
-    }
+fn save_json(json_data: String, output_path: String) -> Result<(), String> {
     let data: Value = serde_json::from_str(&json_data).expect("Failed to parse JSON");
-    let name = data["name"].as_str().unwrap_or("new");
-    let filename = format!("{}_cv_data.json", name);
-    let json_file_path = output_dir.join(filename);
+    let json_file_path = output_path;
 
     let mut file =
         File::create(&json_file_path).map_err(|e| format!("Failed to create JSON file: {}", e))?;
