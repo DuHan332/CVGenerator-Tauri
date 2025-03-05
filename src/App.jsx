@@ -157,7 +157,7 @@ function CVGenerator() {
 
     let fileName = "";
     if (nameRef.current.value !== "") {
-      fileName = nameRef.current.value + "_cv.pdf";
+      fileName = nameRef.current.value + "_cv.json";
     }
     else {
       alert("Please enter your name before submitting.");
@@ -165,7 +165,7 @@ function CVGenerator() {
     }
 
     const filePath = await save({
-      filters: [{ name: "PDF Files", extensions: ["pdf"] }],
+      filters: [{ name: "JSON Files", extensions: ["json"] }],
       defaultPath: fileName,
     });
 
