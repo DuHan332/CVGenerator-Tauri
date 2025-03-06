@@ -250,49 +250,47 @@ function CVGenerator() {
       emailRef.current.value = parsedData.email || "";
       phoneRef.current.value = parsedData.phone || "";
   
-      setWorkExp(
-        parsedData.jobs.map(job => ({
-          companyRef: React.createRef(),
-          titleRef: React.createRef(),
-          dateStartRef: React.createRef(),
-          dateEndRef: React.createRef(),
-          locationRef: React.createRef(),
-          desc1Ref: React.createRef(),
-          desc2Ref: React.createRef(),
-          desc3Ref: React.createRef(),
-        }))
-      );
+      const newWorkExp = parsedData.jobs.map(job => ({
+        companyRef: React.createRef(),
+        titleRef: React.createRef(),
+        dateStartRef: React.createRef(),
+        dateEndRef: React.createRef(),
+        locationRef: React.createRef(),
+        desc1Ref: React.createRef(),
+        desc2Ref: React.createRef(),
+        desc3Ref: React.createRef(),
+      }));
+      setWorkExp(newWorkExp);
   
-      setProject(
-        parsedData.projects.map(proj => ({
-          nameRef: React.createRef(),
-          introRef: React.createRef(),
-          dateRef: React.createRef(),
-          locationRef: React.createRef(),
-          desc1Ref: React.createRef(),
-          desc2Ref: React.createRef(),
-          desc3Ref: React.createRef(),
-        }))
-      );
+      // Update Projects
+      const newProjects = parsedData.projects.map(proj => ({
+        nameRef: React.createRef(),
+        introRef: React.createRef(),
+        dateRef: React.createRef(),
+        locationRef: React.createRef(),
+        desc1Ref: React.createRef(),
+        desc2Ref: React.createRef(),
+        desc3Ref: React.createRef(),
+      }));
+      setProject(newProjects);
   
-      setEducation(
-        parsedData.educations.map(edu => ({
-          schoolRef: React.createRef(),
-          degreeRef: React.createRef(),
-          dateStartRef: React.createRef(),
-          dateEndRef: React.createRef(),
-          locationRef: React.createRef(),
-          desc1Ref: React.createRef(),
-          desc2Ref: React.createRef(),
-          desc3Ref: React.createRef(),
-        }))
-      );
+      // Update Education
+      const newEducation = parsedData.educations.map(edu => ({
+        schoolRef: React.createRef(),
+        degreeRef: React.createRef(),
+        dateStartRef: React.createRef(),
+        dateEndRef: React.createRef(),
+        locationRef: React.createRef(),
+        desc1Ref: React.createRef(),
+        desc2Ref: React.createRef(),
+        desc3Ref: React.createRef(),
+      }));
+      setEducation(newEducation);
   
-      setSkill(
-        parsedData.skills.map(skill => ({
-          skillRef: React.createRef(),
-        }))
-      );
+      const newSkills = parsedData.skills.map(skill => ({
+        skillRef: React.createRef(),
+      }));
+      setSkill(newSkills);
       //Set values after the state update
       setTimeout(() => {
         newWorkExp.forEach((exp, index) => {
