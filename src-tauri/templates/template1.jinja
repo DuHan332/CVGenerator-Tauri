@@ -5,11 +5,7 @@
 
 \begin{document}
 \namesection{ {{ name }} }{
-    \href{mailto:{{ email }}}{ {{ email }} }
-    {% if email and phone %}
-     | 
-    {% endif %}
-    \href{tel:{{ phone }}}{ {{ phone }} }
+    \href{mailto:{{ email }}}{ {{ email }} }{% if email and phone %} | {% endif %}\href{tel:{{ phone }}}{ {{ phone }} }
 }
 
 \begin{minipage}[t]{0.60\textwidth}
@@ -55,7 +51,7 @@
 {% if educations | length > 0 %}
     \customheading{Education}
     {% for education in educations %}
-        \subsection{ {{ education.school }} }
+        \subsection{ {{education.school}} }
         \descript{ {{ education.degree }} }
         \location{ {{ education.date_range }}{% if education.date_range and education.location %} | {% endif %}{{ education.location }} }
         \begin{tightemize}
