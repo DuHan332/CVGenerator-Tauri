@@ -13,6 +13,16 @@ function CVGenerator() {
   const [project, setProject] = useState([]);
   const [education, setEducation] = useState([]);
   const [skill, setSkill] = useState([]);
+  const [selectedTemplate, setSelectedTemplate] = useState("template1");
+
+  const templateImages = {
+    template1: "/images/template1_preview.png",
+    template2: "/images/template2_preview.png",
+  };
+
+  const handleTemplateChange = (event) => {
+    setSelectedTemplate(event.target.value);
+  };
 
   const addWorkExp = () => {
     setWorkExp([
@@ -618,10 +628,25 @@ function CVGenerator() {
       <div>
         <button onClick={handleSubmit}>Submit</button>
         <label>Template: </label>
-        <select name="pets" ref={templateRef}>
-          <option value="template1">template 1</option>
-          <option value="template2">template 2</option>
+        <select name="template" ref={templateRef} onChange={handleTemplateChange}>
+          {Object.keys(templateImages).map((template) => (
+            <option key={template} value={template}>
+              {template.replace("template", "Template ")}
+            </option>
+          ))}
         </select>
+          <img
+            src={templateImages[selectedTemplate]}
+            alt={`${selectedTemplate} preview`}
+            style={{
+              width: "150px",
+              height: "auto",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              marginLeft: "10px",
+              verticalAlign: "top",
+            }}
+          />
       </div>
       <hr></hr>
       <div style={{ display: "flex", gap: "5px" }}>
