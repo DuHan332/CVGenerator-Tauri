@@ -1,10 +1,12 @@
 \documentclass[]{template1}
+\usepackage{titlesec}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\sloppy
+\titleformat{\subsection}{\raggedright\large\bfseries\uppercase}{}{0em}{}
 
 \begin{document}
+\sloppy
 \namesection{ {{ name }} }{
     \href{mailto:{{ email }}}{ {{ email }} }{% if email and phone %} | {% endif %}\href{tel:{{ phone }}}{ {{ phone }} }
 }
