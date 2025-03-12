@@ -80,6 +80,20 @@ function CVGenerator() {
     ]);
   };
 
+  const escapeLatex = (text) => {
+    if (!text) return "";
+    return text
+      .replace(/#/g, "\\#")
+      .replace(/%/g, "\\%")
+      .replace(/_/g, "\\_")
+      .replace(/\$/g, "\\$")
+      .replace(/{/g, "\\{")
+      .replace(/}/g, "\\}")
+      .replace(/&/g, "\\&")
+      .replace(/\^/g, "\\textasciicircum{}")
+      .replace(/~/g, "\\textasciitilde{}");
+  };
+
   const handleSubmit = async () => {
     let fileName = "";
     if (nameRef.current.value !== "") {
@@ -114,44 +128,44 @@ function CVGenerator() {
       }
     };
     const data = {
-      name: nameRef.current.value,
-      email: emailRef.current.value,
-      phone: phoneRef.current.value,
-      template: templateRef.current.value,
+      name: escapeLatex(nameRef.current.value),
+      email: escapeLatex(emailRef.current.value),
+      phone: escapeLatex(phoneRef.current.value),
+      template: escapeLatex(templateRef.current.value),
       jobs: workExp.map(exp => ({
-        company: exp.companyRef.current.value,
-        title: exp.titleRef.current.value,
+        company: escapeLatex(exp.companyRef.current.value),
+        title: escapeLatex(exp.titleRef.current.value),
         date_range: formatMonth(exp.dateStartRef.current.value) + " - " + formatMonth(exp.dateEndRef.current.value),
-        location: exp.locationRef.current.value,
+        location: escapeLatex(exp.locationRef.current.value),
         desc_items: [
-          exp.desc1Ref.current.value,
-          exp.desc2Ref.current.value,
-          exp.desc3Ref.current.value
+          escapeLatex(exp.desc1Ref.current.value),
+          escapeLatex(exp.desc2Ref.current.value),
+          escapeLatex(exp.desc3Ref.current.value)
         ]
       })),
       projects: project.map(proj => ({
-        name: proj.nameRef.current.value,
-        introduction: proj.introRef.current.value,
+        name: escapeLatex(proj.nameRef.current.value),
+        introduction: escapeLatex(proj.introRef.current.value),
         dates: formatMonth(proj.dateRef.current.value),
-        location: proj.locationRef.current.value,
+        location: escapeLatex(proj.locationRef.current.value),
         desc_items: [
-          proj.desc1Ref.current.value,
-          proj.desc2Ref.current.value,
-          proj.desc3Ref.current.value
+          escapeLatex(proj.desc1Ref.current.value),
+          escapeLatex(proj.desc2Ref.current.value),
+          escapeLatex(proj.desc3Ref.current.value)
         ]
       })),
       educations: education.map(edu => ({
-        school: edu.schoolRef.current.value,
-        degree: edu.degreeRef.current.value,
+        school: escapeLatex(edu.schoolRef.current.value),
+        degree: escapeLatex(edu.degreeRef.current.value),
         date_range: formatMonth(edu.dateStartRef.current.value) + " - " + formatMonth(edu.dateEndRef.current.value),
-        location: edu.locationRef.current.value,
+        location: escapeLatex(edu.locationRef.current.value),
         desc_items: [
-          edu.desc1Ref.current.value,
-          edu.desc2Ref.current.value,
-          edu.desc3Ref.current.value
+          escapeLatex(edu.desc1Ref.current.value),
+          escapeLatex(edu.desc2Ref.current.value),
+          escapeLatex(edu.desc3Ref.current.value)
         ]
       })),
-      skills: skill.map(s => s.skillRef.current.value)
+      skills: skill.map(s => escapeLatex(s.skillRef.current.value))
     };
     console.log(data);
     try {
