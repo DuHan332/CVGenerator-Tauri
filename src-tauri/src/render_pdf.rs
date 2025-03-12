@@ -55,7 +55,7 @@ pub fn generate_pdf(
     );
 
     let mut context = Context::new();
-    for (key, value) in parsed_data.as_object().unwrap() {
+    for (key, value) in data.as_object().unwrap() {
         if let Some(s) = value.as_str() {
             context.insert(key, &escape_latex(s));  // ✅ Escape LaTeX symbols before rendering
         } else {
