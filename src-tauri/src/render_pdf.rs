@@ -118,26 +118,26 @@ pub fn generate_pdf(
     return destination_pdf_path.to_string();
 }
 
-/// Generate a new filename if a file already exists
-fn create_new_file_name(original_pdf: &str) -> String {
-    let output_dir = std::env::current_dir()
-        .expect("Failed to get current directory")
-        .parent()
-        .expect("Failed to get parent directory")
-        .join("output");
-    let base_name = original_pdf.trim_end_matches(".pdf");
+// /// Generate a new filename if a file already exists
+// fn create_new_file_name(original_pdf: &str) -> String {
+//     let output_dir = std::env::current_dir()
+//         .expect("Failed to get current directory")
+//         .parent()
+//         .expect("Failed to get parent directory")
+//         .join("output");
+//     let base_name = original_pdf.trim_end_matches(".pdf");
 
-    let mut file_name = original_pdf.to_string();
-    let mut candidate = output_dir.join(&file_name);
-    let mut counter = 1;
+//     let mut file_name = original_pdf.to_string();
+//     let mut candidate = output_dir.join(&file_name);
+//     let mut counter = 1;
 
-    while candidate.exists() {
-        file_name = format!("{}({}).pdf", base_name, counter);
-        candidate = output_dir.join(&file_name);
-        counter += 1;
-    }
-    file_name
-}
+//     while candidate.exists() {
+//         file_name = format!("{}({}).pdf", base_name, counter);
+//         candidate = output_dir.join(&file_name);
+//         counter += 1;
+//     }
+//     file_name
+// }
 
 /// Entry point to process JSON input
 pub fn process_pdf_request(json_data: &str, output_path: &str) -> String {
