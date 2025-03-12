@@ -7,6 +7,18 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 use tera::{Context, Tera};
 
+fn escape_latex(s: &str) -> String {
+    s.replace("#", "\\#")
+     .replace("%", "\\%")
+     .replace("_", "\\_")
+     .replace("$", "\\$")
+     .replace("{", "\\{")
+     .replace("}", "\\}")
+     .replace("&", "\\&")
+     .replace("^", "\\textasciicircum{}")
+     .replace("~", "\\textasciitilde{}")
+}
+
 /// Generate a PDF from a LaTeX template
 pub fn generate_pdf(
     data: Value,
@@ -43,8 +55,12 @@ pub fn generate_pdf(
     );
 
     let mut context = Context::new();
-    for (key, value) in data.as_object().unwrap() {
-        context.insert(key, value);
+    for (key, value) in parsed_data.as_object().unwrap() {
+        if let Some(s) = value.as_str() {
+            context.insert(key, &escape_latex(s));  // ✅ Escape LaTeX symbols before rendering
+        } else {
+            context.insert(key, value);
+        }
     }
 
     let rendered_tex = tera
