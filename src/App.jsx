@@ -8,6 +8,7 @@ function CVGenerator() {
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const phoneRef = useRef(null);
+  const websiteRef = useRef(null);
   const templateRef = useRef(null);
   const [workExp, setWorkExp] = useState([]);
   const [project, setProject] = useState([]);
@@ -433,6 +434,11 @@ function CVGenerator() {
             <label style={{ width: "50px" }}>Phone:</label>
             <input type="tel" ref={phoneRef} style={{ padding: "5px", width: "200px" }} 
                 autoComplete="tel"/>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <label style={{ width: "50px" }}>Website:</label>
+            <input type="tel" ref={websiteRef} style={{ padding: "5px", width: "200px" }}/>
         </div>
       </div>
       <div><button onClick={addWorkExp}>Add Work Experience</button></div>
