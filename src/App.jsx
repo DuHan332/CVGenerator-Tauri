@@ -501,6 +501,7 @@ function CVGenerator() {
         ))}
       </div>
       <div><button onClick={addProject}>Add Project</button></div>
+      
       <div
         style={{
           border: '2px groove',
