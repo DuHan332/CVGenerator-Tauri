@@ -1,6 +1,7 @@
 \documentclass[]{template1}
 \usepackage{titlesec}
 \usepackage{fancyhdr}
+\usepackage{hyperref}
 \pagestyle{fancy}
 \fancyhf{}
 \titleformat{\subsection}{\raggedright\large\bfseries\uppercase}{}{0em}{}
@@ -9,6 +10,8 @@
 \sloppy
 \namesection{ {{ name }} }{
     \href{mailto:{{ email }}}{ {{ email }} }{% if email and phone %} | {% endif %}\href{tel:{{ phone }}}{ {{ phone }} }
+    {% if website and phone %} | {% endif %}
+    \url{ {{- website -}} }
 }
 
 \begin{minipage}[t]{0.60\textwidth}
