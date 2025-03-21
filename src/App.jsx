@@ -9,6 +9,7 @@ function CVGenerator() {
   const emailRef = useRef(null);
   const phoneRef = useRef(null);
   const websiteRef = useRef(null);
+  const linkedinRef = useRef(null);
   const templateRef = useRef(null);
   const [workExp, setWorkExp] = useState([]);
   const [project, setProject] = useState([]);
@@ -133,6 +134,7 @@ function CVGenerator() {
       email: escapeLatex(emailRef.current.value),
       phone: escapeLatex(phoneRef.current.value),
       website: escapeLatex(websiteRef.current.value),
+      linkedin: escapeLatex(linkedinRef.current.value),
       template: escapeLatex(templateRef.current.value),
       jobs: workExp.map(exp => ({
         company: escapeLatex(exp.companyRef.current.value),
@@ -218,6 +220,7 @@ function CVGenerator() {
       email: emailRef.current.value,
       phone: phoneRef.current.value,
       website: websiteRef.current.value,
+      linkedin: linkedinRef.current.value,
       jobs: workExp.map(exp => ({
         company: exp.companyRef.current.value,
         title: exp.titleRef.current.value,
@@ -277,6 +280,7 @@ function CVGenerator() {
       emailRef.current.value = parsedData.email || "";
       phoneRef.current.value = parsedData.phone || "";
       websiteRef.current.value = parsedData.website || "";
+      linkedinRef.current.value = parsedData.linkedin || "";
   
       const newWorkExp = parsedData.jobs.map(job => ({
         companyRef: React.createRef(),
