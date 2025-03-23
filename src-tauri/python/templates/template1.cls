@@ -43,14 +43,17 @@
 }
 
 % Name command (removes \fontspec usage)
-\newcommand{\namesection}[2]{
+\newcommand{\namesection}[3]{
   \centering{
     \fontsize{40pt}{60pt}\selectfont #1
   }\\[5pt]
   \centering{
     \color{headings}\fontsize{11pt}{14pt}\selectfont #2
+  }\\[5pt]
+  \centering{
+    \color{headings}\fontsize{11pt}{14pt}\selectfont #3
   }
-  \noindent\makebox[\linewidth]{ \color{headings}\rule{\paperwidth}{0.4pt}}
+  \noindent\makebox[\linewidth]{\color{headings}\rule{\paperwidth}{0.4pt}}
   \vspace{-15pt}
 }
 
