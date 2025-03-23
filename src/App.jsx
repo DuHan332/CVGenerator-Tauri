@@ -445,12 +445,12 @@ function CVGenerator() {
 
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <label style={{ width: "50px" }}>Website:</label>
-            <input type="tel" ref={websiteRef} style={{ padding: "5px", width: "200px" }}/>
+            <input type="url" ref={websiteRef} style={{ padding: "5px", width: "200px" }}/>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <label style={{ width: "50px" }}>Linkedin:</label>
-            <input type="tel" ref={linkedinRef} style={{ padding: "5px", width: "200px" }}/>
+            <input type="url" ref={linkedinRef} style={{ padding: "5px", width: "200px" }}/>
         </div>
       </div>
       <div><button onClick={addWorkExp}>Add Work Experience</button></div>
