@@ -1,4 +1,4 @@
-# CV Generator
+# CV Generator Ver 1.1
 
 ## 📌 Overview
 This is a **Tauri + React** application that allows users to create and export CVs in **PDF format**. The frontend is built with **React**, and the backend, written in **Rust**, generates PDFs using **LaTeX** and the `Tera` templating engine.
