@@ -14,7 +14,7 @@ function CVGenerator() {
   const [workExp, setWorkExp] = useState([]);
   const [project, setProject] = useState([]);
   const [education, setEducation] = useState([]);
-  const [skill, setSkill] = useState([]);
+  const [skillGroup, setSkillGroup] = useState([]);
   const [selectedTemplate, setSelectedTemplate] = useState("template1");
 
   const templateImages = {
@@ -73,13 +73,32 @@ function CVGenerator() {
     ]);
   };
 
-  const addSkill = () => {
-    setSkill([
-      ...skill,
+  const addSkillGroup = () => {
+    setSkillGroup((prev) => [
+      ...prev,
       {
-        skillRef: React.createRef()
-      }
+        groupnameRef: React.createRef(),
+        skills: [],
+      },
     ]);
+  };
+
+  const addSkillToGroup = (groupIndex) => {
+    const newSkillRef = React.createRef();
+  
+    setSkillGroup((prev) => {
+      const updated = [...prev];
+      updated[groupIndex] = {
+        ...updated[groupIndex],
+        // Insert the new ref into this group's skills
+        skills: [...updated[groupIndex].skills, newSkillRef],
+      };
+      return updated;
+    });
+    // Focus the new skill input after the state update
+    setTimeout(() => {
+      newSkillRef.current?.focus();
+    }, 0);
   };
 
   const escapeLatex = (text) => {
@@ -389,13 +408,6 @@ function CVGenerator() {
   };
 
   useEffect(() => {
-    if (skill.length > 0) {
-      // Focus the most recently added input
-      skill[skill.length - 1].skillRef.current.focus();
-    }
-  }, [skill]);
-
-  useEffect(() => {
     if (workExp.length > 0 ){
       workExp[workExp.length - 1].companyRef.current.focus();
     }
@@ -628,17 +640,52 @@ function CVGenerator() {
         </div>
         ))}
       </div>
-      <div><button onClick={addSkill}>Add Skill</button> </div>
+      <div><button onClick={addSkillGroup}>Add Skill Group</button> </div>
       <div
         style={{
           border: '2px groove',
           padding: '10px',
           marginBottom: '10px',
-          height: skill.length > 0 ? '200px' : '60px',
-          display: skill.length === 0 ? 'none' : 'block',
+          height: skillGroup.length > 0 ? '200px' : '60px',
+          display: skillGroup.length === 0 ? 'none' : 'block',
           overflowY: 'auto'
         }}
       >
+
+
+        {skillGroup.map((group, groupIndex) => (
+          <div
+          key={groupIndex}
+          style={{
+            border: "1px groove #0f0f0f",
+            padding: "10px",
+            marginBottom: "5px",
+          }}
+        >
+          <h3 style={{ margin: "0 0 0 0" }}>Skill Group {groupIndex + 1}</h3>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <label style={{ width: "100px" }}>Category:</label>
+            <input type="text" ref={group.groupnameRef} style={{width: "200px"}} />
+          </div>
+          <h4>Skills:</h4>
+          {group.skills.map((skillRef, skillIndex) => (
+            <div key={skillIndex} style={{
+              margin: "10px 5px",
+              display: "inline-flex",
+              flexDirection: "column",
+              gap: "10px",
+            }}>
+              <input type="text" ref={skillRef} style={{width: "100px"}} onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  addSkillToGroup(groupIndex);
+                }}}
+              />
+            </div>
+          ))}
+          <button onClick={() => addSkillToGroup(groupIndex)}>Add Skill</button>
+        </div>
+        ))}
+
         {skill.map((s, index) => (
           <div
           key={index}
