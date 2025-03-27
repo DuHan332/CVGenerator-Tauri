@@ -686,7 +686,7 @@ function CVGenerator() {
         </div>
         ))}
 
-        {skill.map((s, index) => (
+        {/* {skill.map((s, index) => (
           <div
           key={index}
           style={{
@@ -702,7 +702,7 @@ function CVGenerator() {
           }}}
         />
         </div>
-        ))}
+        ))} */}
       </div>
 
       <div>
