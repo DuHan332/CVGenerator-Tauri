@@ -188,7 +188,10 @@ function CVGenerator() {
           escapeLatex(edu.desc3Ref.current.value)
         ]
       })),
-      skills: skill.map(s => escapeLatex(s.skillRef.current.value))
+      skills: skillGroup.map(group => ({
+        groupname: escapeLatex(group.groupnameRef.current.value),
+        skills: group.skills.map(skillRef => escapeLatex(skillRef.current.value))
+      }))
     };
     console.log(data);
     try {
@@ -273,7 +276,10 @@ function CVGenerator() {
           edu.desc3Ref.current.value
         ]
       })),
-      skills: skill.map(s => s.skillRef.current.value)
+      skills: skillGroup.map(group => ({
+        groupname: group.groupnameRef.current.value,
+        skills: group.skills.map(skillRef => skillRef.current.value)
+      }))
     };
     try {
       await core.invoke("save_json", { jsonData: JSON.stringify(data), outputPath: filePath  });
@@ -338,10 +344,12 @@ function CVGenerator() {
       }));
       setEducation(newEducation);
   
-      const newSkills = parsedData.skills.map(skill => ({
-        skillRef: React.createRef(),
+      const newSkillGroups = (parsedData.skills || []).map(group => ({
+        groupnameRef: React.createRef(),
+        skills: (group.skills || []).map(() => React.createRef()),
       }));
-      setSkill(newSkills);
+      console.log("newSkillGroups:", newSkillGroups);
+      setSkillGroup(newSkillGroups);
       //Set values after the state update
       setTimeout(() => {
         newWorkExp.forEach((exp, index) => {
@@ -371,7 +379,6 @@ function CVGenerator() {
           const projectDate = parsedData.projects[index].dates || "";
           proj.dateRef.current.value = projectDate ? formatDateToInput(projectDate) : "";
         });
-  
         newEducation.forEach((edu, index) => {
           edu.schoolRef.current.value = parsedData.educations[index].school || "";
           edu.degreeRef.current.value = parsedData.educations[index].degree || "";
@@ -386,9 +393,14 @@ function CVGenerator() {
           edu.dateStartRef.current.value = startDate ? formatDateToInput(startDate) : "";
           edu.dateEndRef.current.value = endDate ? formatDateToInput(endDate) : "";
         });
-  
-        newSkills.forEach((s, index) => {
-          s.skillRef.current.value = parsedData.skills[index] || "";
+        console.log("newSkillGroups:", newSkillGroups);
+        newSkillGroups.forEach((groupObj, groupIndex) => {
+          const groupData = (parsedData.skills || [])[groupIndex] || {};
+          groupObj.groupnameRef.current.value = groupData.groupname || "";
+          // Fill each skill input
+          groupObj.skills.forEach((skillRef, skillIx) => {
+            skillRef.current.value = (groupData.skills || [])[skillIx] || "";
+          });
         });
   
       }, 0);
