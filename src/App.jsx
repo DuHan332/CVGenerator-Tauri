@@ -77,7 +77,7 @@ function CVGenerator() {
     setSkillGroup((prev) => [
       ...prev,
       {
-        groupnameRef: React.createRef(),
+        groupNameRef: React.createRef(),
         skills: [],
       },
     ]);
@@ -189,7 +189,7 @@ function CVGenerator() {
         ]
       })),
       skills: skillGroup.map(group => ({
-        groupname: escapeLatex(group.groupnameRef.current.value),
+        groupName: escapeLatex(group.groupNameRef.current.value),
         skills: group.skills.map(skillRef => escapeLatex(skillRef.current.value))
       }))
     };
@@ -277,7 +277,7 @@ function CVGenerator() {
         ]
       })),
       skills: skillGroup.map(group => ({
-        groupname: group.groupnameRef.current.value,
+        groupName: group.groupNameRef.current.value,
         skills: group.skills.map(skillRef => skillRef.current.value)
       }))
     };
@@ -345,7 +345,7 @@ function CVGenerator() {
       setEducation(newEducation);
   
       const newSkillGroups = (parsedData.skills || []).map(group => ({
-        groupnameRef: React.createRef(),
+        groupNameRef: React.createRef(),
         skills: (group.skills || []).map(() => React.createRef()),
       }));
       console.log("newSkillGroups:", newSkillGroups);
@@ -396,7 +396,7 @@ function CVGenerator() {
         console.log("newSkillGroups:", newSkillGroups);
         newSkillGroups.forEach((groupObj, groupIndex) => {
           const groupData = (parsedData.skills || [])[groupIndex] || {};
-          groupObj.groupnameRef.current.value = groupData.groupname || "";
+          groupObj.groupNameRef.current.value = groupData.groupName || "";
           // Fill each skill input
           groupObj.skills.forEach((skillRef, skillIx) => {
             skillRef.current.value = (groupData.skills || [])[skillIx] || "";
@@ -677,7 +677,7 @@ function CVGenerator() {
           <h3 style={{ margin: "0 0 0 0" }}>Skill Group {groupIndex + 1}</h3>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <label style={{ width: "100px" }}>Category:</label>
-            <input type="text" ref={group.groupnameRef} style={{width: "200px"}} />
+            <input type="text" ref={group.groupNameRef} style={{width: "200px"}} />
           </div>
           <h4>Skills:</h4>
           {group.skills.map((skillRef, skillIndex) => (
