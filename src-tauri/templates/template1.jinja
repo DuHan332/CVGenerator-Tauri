@@ -75,15 +75,22 @@
 
 {% if skills | length > 0 %}
     \customheading{Skills}
-    \begin{tightemize}
-        {% for skill in skills %}
-            {% if skill %}
-                \item {{ skill }}
-            {% endif %}
-        {% endfor %}
-    \end{tightemize}
-{% endif %}
+    {% for group in skills %}
+        {% if group.groupName %}
+            \subsection{ {{ group.groupName }} }
+        {% endif %}
+        {% if group.skills | length > 0 %}
+            {% for skill in group.skills %}
+                {% if skill|trim != '' %}
+                    {{ skill|trim }}{% if not loop.last %}, {% endif %}
+                {% endif %}
+            {% endfor %}
+        \par
+        {% endif %}
+        \vspace{5pt}
+    {% endfor %}
 \sectionsep
+{% endif %}
 
 \end{minipage}
 \end{document}
