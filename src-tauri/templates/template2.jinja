@@ -88,12 +88,22 @@
 {% endif %}
 
 {% if skills | length > 0 %}
-\section{Technical Skills}
-  \begin{itemize}[leftmargin=0.15in, label={}]
-    {%- for skill in skills -%}
-    \item {{ skill }}
-    {%- endfor -%}
-  \end{itemize}
+    \customheading{Skills}
+    {% for group in skills %}
+        {% if group.groupName %}
+            \subsection{ {{ group.groupName }} }
+        {% endif %}
+        {% if group.skills | length > 0 %}
+            {% for skill in group.skills %}
+                {% if skill|trim != '' %}
+                    {{ skill|trim }}{% if not loop.last %}, {% endif %}
+                {% endif %}
+            {% endfor %}
+        \par
+        {% endif %}
+        \vspace{5pt}
+    {% endfor %}
+\sectionsep
 {% endif %}
 
 \end{document}
